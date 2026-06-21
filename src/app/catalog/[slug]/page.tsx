@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getToolBySlug } from '@/lib/api/tools';
+import AffiliateLink from '@/features/shared/ui/AffiliateLink';
 
 export default async function ToolPage({ 
   params 
@@ -93,16 +94,18 @@ export default async function ToolPage({
       {/* CTA Button */}
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-8 text-center">
         <h2 className="text-2xl font-bold mb-4">Готовы попробовать?</h2>
-        <a
+        <AffiliateLink
           href={tool.affiliateLink}
-          target="_blank"
-          rel="noopener noreferrer nofollow"
+          slug={tool.slug}
           className="inline-block bg-white text-gray-900 font-semibold px-8 py-3 rounded-lg hover:bg-gray-100 transition transform hover:scale-105"
         >
           Перейти на сайт {tool.name} →
-        </a>
+        </AffiliateLink>
         <p className="text-sm text-blue-200 mt-4">
           Переходя по ссылке, вы поддерживаете проект (партнёрская ссылка)
+        </p>
+        <p className="mt-2 text-xs text-blue-100/80">
+          Уже {tool.affiliateClicks.toLocaleString('ru-RU')} переходов
         </p>
       </div>
     </div>

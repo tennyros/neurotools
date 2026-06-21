@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import type { ToolData } from '@/lib/types/tool';
+import AffiliateLink from '@/features/shared/ui/AffiliateLink';
 
 interface CompareViewProps {
   tools: ToolData[];
@@ -140,24 +141,22 @@ export default function CompareView({ tools }: CompareViewProps) {
               <tr>
                 <td className="p-4 font-medium text-gray-300">Ссылка</td>
                 <td className="p-4">
-                  <a
+                  <AffiliateLink
                     href={selectedTool1.affiliateLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    slug={selectedTool1.slug}
                     className="text-blue-400 underline hover:text-blue-300"
                   >
                     Перейти →
-                  </a>
+                  </AffiliateLink>
                 </td>
                 <td className="p-4">
-                  <a
+                  <AffiliateLink
                     href={selectedTool2.affiliateLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    slug={selectedTool2.slug}
                     className="text-blue-400 underline hover:text-blue-300"
                   >
                     Перейти →
-                  </a>
+                  </AffiliateLink>
                 </td>
               </tr>
             </tbody>

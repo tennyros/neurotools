@@ -12,6 +12,7 @@ export interface ToolData {
   description: string;
   fullDescription: string;
   affiliateLink: string;
+  affiliateClicks: number;
   imageUrl?: string;
   pricing: ToolPricing;
   pros: string[];

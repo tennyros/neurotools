@@ -12,6 +12,7 @@ interface ApiToolResponse {
   description: string;
   fullDescription: string;
   affiliateLink: string;
+  affiliateClicks: number;
   pricing: ApiToolPricing;
   pros: string[];
   cons: string[];
@@ -41,6 +42,7 @@ function normalizeTool(tool: ApiToolResponse): ToolData {
     description: tool.description,
     fullDescription: tool.fullDescription,
     affiliateLink: tool.affiliateLink,
+    affiliateClicks: tool.affiliateClicks,
     pricing: normalizePricing(tool.pricing),
     pros: tool.pros,
     cons: tool.cons,
@@ -95,4 +97,21 @@ export async function getCatalogSummary(featuredLimit = 3): Promise<ToolCatalogS
     averageRating: Number(summary.averageRating),
     featuredTools: summary.featuredTools.map(normalizeTool),
   };
+}
+
+export async function trackAffiliateClick(slug: string): Promise<void> {
+  const endpoint = `${API_URL}/api/tools/${encodeURIComponent(slug)}/click`;
+
+  if (typeof navigator !== 'undefined' && typeof navigator.sendBeacon === 'function') {
+    const sent = navigator.sendBeacon(endpoint, new Blob([], { type: 'text/plain;charset=UTF-8' }));
+    if (sent) {
+      return;
+    }
+  }
+
+  await fetch(endpoint, {
+    method: 'POST',
+    keepalive: true,
+    mode: 'cors',
+  });
 }
