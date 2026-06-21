@@ -12,6 +12,7 @@ interface ApiToolResponse {
   description: string;
   fullDescription: string;
   affiliateLink: string;
+  clickToken: string;
   affiliateClicks: number;
   externalSource?: 'huggingface' | 'civitai' | null;
   externalId?: string | null;
@@ -52,6 +53,7 @@ function normalizeTool(tool: ApiToolResponse): ToolData {
     description: tool.description,
     fullDescription: tool.fullDescription,
     affiliateLink: tool.affiliateLink,
+    clickToken: tool.clickToken,
     affiliateClicks: tool.affiliateClicks,
     externalSource: tool.externalSource ?? null,
     externalId: tool.externalId ?? null,
@@ -119,11 +121,15 @@ export async function getCatalogSummary(featuredLimit = 3): Promise<ToolCatalogS
   };
 }
 
-export async function trackAffiliateClick(slug: string): Promise<void> {
+export async function trackAffiliateClick(slug: string, token: string): Promise<void> {
   const endpoint = `${API_URL}/api/tools/${encodeURIComponent(slug)}/click`;
+  const body = new URLSearchParams({ token }).toString();
 
   if (typeof navigator !== 'undefined' && typeof navigator.sendBeacon === 'function') {
-    const sent = navigator.sendBeacon(endpoint, new Blob([], { type: 'text/plain;charset=UTF-8' }));
+    const sent = navigator.sendBeacon(
+      endpoint,
+      new Blob([body], { type: 'application/x-www-form-urlencoded;charset=UTF-8' })
+    );
     if (sent) {
       return;
     }
@@ -131,6 +137,10 @@ export async function trackAffiliateClick(slug: string): Promise<void> {
 
   await fetch(endpoint, {
     method: 'POST',
+    body,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    },
     keepalive: true,
     mode: 'cors',
   });

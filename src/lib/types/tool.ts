@@ -12,6 +12,7 @@ export interface ToolData {
   description: string;
   fullDescription: string;
   affiliateLink: string;
+  clickToken: string;
   affiliateClicks: number;
   externalSource?: 'huggingface' | 'civitai' | null;
   externalId?: string | null;

@@ -164,6 +164,7 @@ export default function CompareView({ tools }: CompareViewProps) {
                   <AffiliateLink
                     href={selectedTool1.affiliateLink}
                     slug={selectedTool1.slug}
+                    clickToken={selectedTool1.clickToken}
                     className="text-blue-400 underline hover:text-blue-300"
                   >
                     Перейти →
@@ -173,6 +174,7 @@ export default function CompareView({ tools }: CompareViewProps) {
                   <AffiliateLink
                     href={selectedTool2.affiliateLink}
                     slug={selectedTool2.slug}
+                    clickToken={selectedTool2.clickToken}
                     className="text-blue-400 underline hover:text-blue-300"
                   >
                     Перейти →

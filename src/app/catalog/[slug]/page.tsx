@@ -143,6 +143,7 @@ export default async function ToolPage({
         <AffiliateLink
           href={tool.affiliateLink}
           slug={tool.slug}
+          clickToken={tool.clickToken}
           className="inline-block bg-white text-gray-900 font-semibold px-8 py-3 rounded-lg hover:bg-gray-100 transition transform hover:scale-105"
         >
           Перейти на сайт {tool.name} →

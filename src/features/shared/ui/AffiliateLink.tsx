@@ -6,13 +6,14 @@ import { trackAffiliateClick } from '@/lib/api/tools';
 interface AffiliateLinkProps {
   href: string;
   slug: string;
+  clickToken: string;
   children: ReactNode;
   className?: string;
 }
 
-export default function AffiliateLink({ href, slug, children, className }: AffiliateLinkProps) {
+export default function AffiliateLink({ href, slug, clickToken, children, className }: AffiliateLinkProps) {
   const handleClick = () => {
-    void trackAffiliateClick(slug);
+    void trackAffiliateClick(slug, clickToken);
   };
 
   return (
