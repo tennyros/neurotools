@@ -55,20 +55,38 @@ export default function CatalogView({ tools }: CatalogViewProps) {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filteredTools.map((tool) => (
             <Link href={`/catalog/${tool.slug}`} key={tool.id}>
-              <div className="h-full cursor-pointer rounded-lg bg-gray-800 p-6 transition hover:bg-gray-700">
-                <div className="mb-3 flex items-start justify-between">
-                  <h2 className="text-xl font-semibold">{tool.name}</h2>
-                  <span className="text-yellow-400">⭐ {tool.rating}</span>
-                </div>
-                <p className="mb-4 text-gray-400">{tool.description}</p>
-                <div className="flex items-center justify-between">
-                  <span className="rounded bg-gray-700 px-2 py-1 text-sm">
-                    {tool.category}
-                  </span>
-                  <span className="text-sm text-green-400">
-                    {tool.pricing === 'free' ? '🔓 Бесплатно' :
-                      tool.pricing === 'freemium' ? '💎 Freemium' : '💰 Платный'}
-                  </span>
+              <div className="flex h-full cursor-pointer flex-col overflow-hidden rounded-lg bg-gray-800 transition hover:bg-gray-700">
+                {tool.previewImages?.[0] ? (
+                  <div className="aspect-[16/9] w-full overflow-hidden bg-gray-900">
+                    <img
+                      src={tool.previewImages[0]}
+                      alt={tool.name}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                ) : null}
+                <div className="flex flex-1 flex-col p-6">
+                  <div className="mb-3 flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <h2 className="truncate text-xl font-semibold">{tool.name}</h2>
+                      <p className="mt-1 text-sm text-gray-400">{tool.category}</p>
+                    </div>
+                    <span className="whitespace-nowrap text-yellow-400">⭐ {tool.rating.toFixed(1)}</span>
+                  </div>
+                  <p className="mb-4 flex-1 text-sm text-gray-400">{tool.description}</p>
+                  <div className="mb-4 flex flex-wrap gap-2">
+                    <SourceBadge source={tool.externalSource} />
+                    <span className="rounded bg-gray-700 px-2 py-1 text-xs text-gray-300">
+                      {tool.pricing === 'free' ? 'Бесплатно' :
+                        tool.pricing === 'freemium' ? 'Freemium' : 'Платный'}
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-3 text-xs text-gray-400">
+                    {tool.provider ? <span>by {tool.provider}</span> : null}
+                    {tool.downloads ? <span>⬇ {formatNumber(tool.downloads)}</span> : null}
+                    {tool.likes ? <span>♥ {formatNumber(tool.likes)}</span> : null}
+                    {tool.tags?.length ? <span>{tool.tags.slice(0, 3).join(', ')}</span> : null}
+                  </div>
                 </div>
               </div>
             </Link>
@@ -77,4 +95,22 @@ export default function CatalogView({ tools }: CatalogViewProps) {
       )}
     </div>
   );
+}
+
+function SourceBadge({ source }: { source?: ToolData['externalSource'] }) {
+  if (source === 'huggingface') {
+    return <span className="rounded bg-sky-500/15 px-2 py-1 text-xs text-sky-300">Hugging Face</span>;
+  }
+
+  if (source === 'civitai') {
+    return <span className="rounded bg-fuchsia-500/15 px-2 py-1 text-xs text-fuchsia-300">Civitai</span>;
+  }
+
+  return <span className="rounded bg-gray-700 px-2 py-1 text-xs text-gray-300">Manual</span>;
+}
+
+function formatNumber(value: number): string {
+  if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}M`;
+  if (value >= 1_000) return `${(value / 1_000).toFixed(1)}K`;
+  return value.toString();
 }

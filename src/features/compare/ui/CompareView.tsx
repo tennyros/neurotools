@@ -86,9 +86,29 @@ export default function CompareView({ tools }: CompareViewProps) {
                 <td className="p-4 text-gray-300">{selectedTool2.category}</td>
               </tr>
               <tr>
+                <td className="p-4 font-medium text-gray-300">Источник</td>
+                <td className="p-4 text-gray-300">{sourceLabel(selectedTool1.externalSource)}</td>
+                <td className="p-4 text-gray-300">{sourceLabel(selectedTool2.externalSource)}</td>
+              </tr>
+              <tr>
+                <td className="p-4 font-medium text-gray-300">Провайдер</td>
+                <td className="p-4 text-gray-300">{selectedTool1.provider ?? '—'}</td>
+                <td className="p-4 text-gray-300">{selectedTool2.provider ?? '—'}</td>
+              </tr>
+              <tr>
                 <td className="p-4 font-medium text-gray-300">Рейтинг</td>
                 <td className="p-4 text-yellow-400">⭐ {selectedTool1.rating.toFixed(1)}</td>
                 <td className="p-4 text-yellow-400">⭐ {selectedTool2.rating.toFixed(1)}</td>
+              </tr>
+              <tr>
+                <td className="p-4 font-medium text-gray-300">Скачивания</td>
+                <td className="p-4 text-gray-300">{formatNumber(selectedTool1.downloads ?? 0)}</td>
+                <td className="p-4 text-gray-300">{formatNumber(selectedTool2.downloads ?? 0)}</td>
+              </tr>
+              <tr>
+                <td className="p-4 font-medium text-gray-300">Лайки</td>
+                <td className="p-4 text-gray-300">{formatNumber(selectedTool1.likes ?? 0)}</td>
+                <td className="p-4 text-gray-300">{formatNumber(selectedTool2.likes ?? 0)}</td>
               </tr>
               <tr>
                 <td className="p-4 font-medium text-gray-300">Модель оплаты</td>
@@ -189,4 +209,16 @@ export default function CompareView({ tools }: CompareViewProps) {
       )}
     </div>
   );
+}
+
+function sourceLabel(source?: ToolData['externalSource']): string {
+  if (source === 'huggingface') return 'Hugging Face';
+  if (source === 'civitai') return 'Civitai';
+  return 'Manual';
+}
+
+function formatNumber(value: number): string {
+  if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}M`;
+  if (value >= 1_000) return `${(value / 1_000).toFixed(1)}K`;
+  return value.toString();
 }

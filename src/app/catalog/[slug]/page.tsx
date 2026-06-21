@@ -39,20 +39,66 @@ export default async function ToolPage({
       
       {/* Header */}
       <div className="bg-gray-800 rounded-lg p-6 mb-8">
-        <div className="flex justify-between items-start mb-4">
-          <h1 className="text-3xl font-bold">{tool.name}</h1>
+        <div className="flex justify-between items-start gap-4 mb-4">
+          <div>
+            <h1 className="text-3xl font-bold">{tool.name}</h1>
+            <div className="mt-2 flex flex-wrap gap-2 text-sm">
+              <SourceBadge source={tool.externalSource} />
+              {tool.provider ? <span className="rounded bg-gray-700 px-2 py-1 text-gray-300">by {tool.provider}</span> : null}
+            </div>
+          </div>
           <span className={`px-3 py-1 rounded-full text-sm font-medium ${pricingColors[tool.pricing]}`}>
             {pricingText[tool.pricing]}
           </span>
         </div>
         
-        <div className="flex items-center gap-4 mb-4">
+        <div className="flex flex-wrap items-center gap-4 mb-4 text-sm">
           <span className="text-yellow-400 text-xl">⭐ {tool.rating.toFixed(1)}</span>
           <span className="text-gray-400">Категория: {tool.category}</span>
+          {tool.downloads ? <span className="text-gray-400">⬇ {tool.downloads.toLocaleString('ru-RU')}</span> : null}
+          {tool.likes ? <span className="text-gray-400">♥ {tool.likes.toLocaleString('ru-RU')}</span> : null}
+          {tool.ratingExternal ? <span className="text-gray-400">External: {tool.ratingExternal.toFixed(2)}</span> : null}
         </div>
         
         <p className="text-gray-300 text-lg">{tool.description}</p>
       </div>
+
+      {tool.previewImages?.length ? (
+        <div className="grid gap-4 md:grid-cols-2 mb-8">
+          {tool.previewImages.slice(0, 4).map((image) => (
+            <div key={image} className="overflow-hidden rounded-lg bg-gray-800">
+              <img src={image} alt={`${tool.name} preview`} className="h-64 w-full object-cover" />
+            </div>
+          ))}
+        </div>
+      ) : null}
+
+      {tool.tags?.length ? (
+        <div className="mb-8 rounded-lg bg-gray-800/50 p-6">
+          <h2 className="text-xl font-semibold mb-3">Теги</h2>
+          <div className="flex flex-wrap gap-2">
+            {tool.tags.map((tag) => (
+              <span key={tag} className="rounded-full bg-gray-700 px-3 py-1 text-sm text-gray-300">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      {tool.metadata && Object.keys(tool.metadata).length > 0 ? (
+        <div className="mb-8 rounded-lg bg-gray-800/50 p-6">
+          <h2 className="text-xl font-semibold mb-3">Дополнительно</h2>
+          <dl className="grid gap-3 md:grid-cols-2">
+            {Object.entries(tool.metadata).map(([key, value]) => (
+              <div key={key}>
+                <dt className="text-sm text-gray-400">{key}</dt>
+                <dd className="text-gray-200">{Array.isArray(value) ? value.join(', ') : String(value)}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      ) : null}
       
       {/* Full description */}
       <div className="bg-gray-800/50 rounded-lg p-6 mb-8">
@@ -110,4 +156,16 @@ export default async function ToolPage({
       </div>
     </div>
   );
+}
+
+function SourceBadge({ source }: { source?: 'huggingface' | 'civitai' | null }) {
+  if (source === 'huggingface') {
+    return <span className="rounded bg-sky-500/15 px-2 py-1 text-xs text-sky-300">Hugging Face</span>;
+  }
+
+  if (source === 'civitai') {
+    return <span className="rounded bg-fuchsia-500/15 px-2 py-1 text-xs text-fuchsia-300">Civitai</span>;
+  }
+
+  return <span className="rounded bg-gray-700 px-2 py-1 text-xs text-gray-300">Manual</span>;
 }

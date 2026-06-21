@@ -13,6 +13,16 @@ export interface ToolData {
   fullDescription: string;
   affiliateLink: string;
   affiliateClicks: number;
+  externalSource?: 'huggingface' | 'civitai' | null;
+  externalId?: string | null;
+  provider?: string | null;
+  downloads?: number;
+  likes?: number;
+  ratingExternal?: number | null;
+  tags?: string[] | null;
+  previewImages?: string[] | null;
+  metadata?: Record<string, unknown> | null;
+  lastSyncAt?: string | null;
   imageUrl?: string;
   pricing: ToolPricing;
   pros: string[];

@@ -13,6 +13,16 @@ interface ApiToolResponse {
   fullDescription: string;
   affiliateLink: string;
   affiliateClicks: number;
+  externalSource?: 'huggingface' | 'civitai' | null;
+  externalId?: string | null;
+  provider?: string | null;
+  downloads?: number;
+  likes?: number;
+  ratingExternal?: number | string | null;
+  tags?: string[] | null;
+  previewImages?: string[] | null;
+  metadata?: Record<string, unknown> | null;
+  lastSyncAt?: string | null;
   pricing: ApiToolPricing;
   pros: string[];
   cons: string[];
@@ -43,6 +53,16 @@ function normalizeTool(tool: ApiToolResponse): ToolData {
     fullDescription: tool.fullDescription,
     affiliateLink: tool.affiliateLink,
     affiliateClicks: tool.affiliateClicks,
+    externalSource: tool.externalSource ?? null,
+    externalId: tool.externalId ?? null,
+    provider: tool.provider ?? null,
+    downloads: tool.downloads ?? 0,
+    likes: tool.likes ?? 0,
+    ratingExternal: tool.ratingExternal == null ? null : Number(tool.ratingExternal),
+    tags: tool.tags ?? null,
+    previewImages: tool.previewImages ?? null,
+    metadata: tool.metadata ?? null,
+    lastSyncAt: tool.lastSyncAt ?? null,
     pricing: normalizePricing(tool.pricing),
     pros: tool.pros,
     cons: tool.cons,
