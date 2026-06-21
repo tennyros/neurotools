@@ -1,52 +1,57 @@
 export default function AboutPage() {
   return (
-    <div className="max-w-3xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">О проекте</h1>
-      
-      <div className="prose prose-invert max-w-none">
-        <div className="bg-gray-800 rounded-lg p-6 mb-6">
-          <h2 className="text-2xl font-semibold mb-4">🤖 НейроИнструменты</h2>
-          <p className="text-gray-300">
-            Мы создаём независимые обзоры и сравнения AI-инструментов, чтобы помочь вам выбрать лучшие решения для работы, творчества и разработки.
-          </p>
+    <div className="space-y-8">
+      <section className="reveal overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] p-6 sm:p-8">
+        <div className="text-sm uppercase tracking-[0.28em] text-sky-300/80">
+          О проекте
         </div>
+        <h1 className="mt-3 text-3xl font-semibold text-white sm:text-4xl">
+          Нейтральный каталог AI-инструментов, собранный как продукт
+        </h1>
+        <p className="mt-4 max-w-3xl text-slate-300">
+          NeuroTools помогает выбирать сервисы для текста, изображений и разработки через
+          короткие обзоры, сравнения и прозрачные переходы к источникам.
+        </p>
+      </section>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-gray-800/50 rounded-lg p-6">
-            <h3 className="text-xl font-semibold text-blue-400 mb-3">🎯 Наша цель</h3>
-            <p className="text-gray-300">
-              Сделать мир AI-технологий понятным и доступным для каждого. Мы тестируем инструменты, выделяем сильные и слабые стороны, даём честные рекомендации.
-            </p>
-          </div>
-          
-          <div className="bg-gray-800/50 rounded-lg p-6">
-            <h3 className="text-xl font-semibold text-green-400 mb-3">📝 Как мы работаем</h3>
-            <ul className="space-y-2 text-gray-300">
-              <li>• Исследуем рынок AI-инструментов</li>
-              <li>• Тестируем каждый инструмент</li>
-              <li>• Пишем детальные обзоры</li>
-              <li>• Сравниваем альтернативы</li>
-            </ul>
-          </div>
-          
-          <div className="bg-gray-800/50 rounded-lg p-6">
-            <h3 className="text-xl font-semibold text-yellow-400 mb-3">💡 Почему мы?</h3>
-            <ul className="space-y-2 text-gray-300">
-              <li>• Независимые обзоры</li>
-              <li>• Реальные тесты</li>
-              <li>• Честные рекомендации</li>
-              <li>• Постоянное обновление</li>
-            </ul>
-          </div>
-          
-          <div className="bg-gray-800/50 rounded-lg p-6">
-            <h3 className="text-xl font-semibold text-purple-400 mb-3">🤝 Поддержать проект</h3>
-            <p className="text-gray-300">
-              Мы используем партнёрские ссылки — это помогает нам оставаться независимыми и бесплатными для вас.
-            </p>
-          </div>
-        </div>
+      <div className="grid gap-4 md:grid-cols-2">
+        <InfoCard
+          title="Наша цель"
+          tone="cyan"
+          text="Сделать рынок AI-инструментов понятным, визуально чистым и удобным для сравнения."
+        />
+        <InfoCard
+          title="Как мы работаем"
+          tone="emerald"
+          text="Собираем данные из API, обновляем карточки автоматически и держим контент коротким."
+        />
+        <InfoCard
+          title="Почему это удобно"
+          tone="amber"
+          text="Фильтры, сравнение и карточки выстроены так, чтобы пользователь быстро дошёл до решения."
+        />
+        <InfoCard
+          title="Поддержка проекта"
+          tone="violet"
+          text="Партнёрские ссылки помогают развивать проект без навязчивой рекламы."
+        />
       </div>
+    </div>
+  );
+}
+
+function InfoCard({ title, text, tone }: { title: string; text: string; tone: 'cyan' | 'emerald' | 'amber' | 'violet' }) {
+  const toneClasses = {
+    cyan: 'from-cyan-400/15 to-slate-950/40 text-cyan-100',
+    emerald: 'from-emerald-400/15 to-slate-950/40 text-emerald-100',
+    amber: 'from-amber-400/15 to-slate-950/40 text-amber-100',
+    violet: 'from-violet-400/15 to-slate-950/40 text-violet-100',
+  };
+
+  return (
+    <div className={`reveal rounded-[1.75rem] border border-white/10 bg-gradient-to-br p-6 ${toneClasses[tone]}`}>
+      <h2 className="text-xl font-semibold text-white">{title}</h2>
+      <p className="mt-3 text-sm leading-6 text-slate-300">{text}</p>
     </div>
   );
 }

@@ -4,7 +4,7 @@ import Header from '@/components/layout/Header';
 
 export const metadata: Metadata = {
   title: 'НейроИнструменты',
-  description: 'Обзоры и сравнения AI-инструментов',
+  description: 'Актуальный каталог AI-инструментов, обзоры и сравнения',
 };
 
 export default function RootLayout({
@@ -14,9 +14,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ru">
-      <body className="min-h-screen bg-gray-950 text-white">
+      <body className="min-h-screen text-slate-100">
         <Header />
-        <main className="container mx-auto px-4 py-8 sm:py-10">
+        <main className="mx-auto w-full max-w-7xl px-4 pb-16 pt-8 sm:px-6 lg:px-8">
           {children}
         </main>
       </body>

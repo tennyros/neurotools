@@ -2,16 +2,22 @@ import Link from 'next/link';
 
 export default function NotFound() {
   return (
-    <div className="flex flex-col items-center justify-center py-20 text-center">
-      <h1 className="text-6xl font-bold text-gray-700 mb-4">404</h1>
-      <h2 className="text-2xl font-semibold mb-4">Страница не найдена</h2>
-      <p className="text-gray-400 mb-8">Извините, такой страницы не существует</p>
-      <Link 
-        href="/" 
-        className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-      >
-        На главную
-      </Link>
+    <div className="mx-auto flex min-h-[60vh] max-w-2xl items-center justify-center px-4">
+      <div className="reveal w-full rounded-[2rem] border border-white/10 bg-white/[0.04] p-8 text-center">
+        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-2xl">
+          404
+        </div>
+        <h1 className="mt-6 text-3xl font-semibold text-white">Страница не найдена</h1>
+        <p className="mt-3 text-slate-300">
+          Возможно, ссылка устарела или страница была перемещена.
+        </p>
+        <Link
+          href="/"
+          className="mt-8 inline-flex items-center justify-center rounded-full bg-cyan-300 px-6 py-3 font-semibold text-slate-950 transition hover:-translate-y-0.5 hover:bg-cyan-200"
+        >
+          На главную
+        </Link>
+      </div>
     </div>
   );
 }
