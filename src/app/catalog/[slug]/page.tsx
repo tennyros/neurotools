@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { getToolBySlug } from '@/data/api';
+import { getToolBySlug } from '@/lib/api/tools';
 
 export default async function ToolPage({ 
   params 

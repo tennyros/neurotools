@@ -2,8 +2,8 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import SearchBar from '@/components/SearchBar';
-import type { ToolData } from '@/types';
+import SearchBar from '@/features/catalog/ui/SearchBar';
+import type { ToolData } from '@/lib/types/tool';
 
 interface CatalogViewProps {
   tools: ToolData[];

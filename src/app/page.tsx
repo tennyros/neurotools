@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { getCatalogSummary } from '@/data/api';
+import { getCatalogSummary } from '@/lib/api/tools';
 
 export default async function Home() {
   const summary = await getCatalogSummary(3);

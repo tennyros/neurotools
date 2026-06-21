@@ -1,4 +1,4 @@
-import type { ToolData, ToolPricing } from '@/types';
+import type { ToolData, ToolPricing } from '@/lib/types/tool';
 
 type ApiToolPricing = 'FREE' | 'FREEMIUM' | 'PAID';
 

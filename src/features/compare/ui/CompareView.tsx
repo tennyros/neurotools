@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import type { ToolData } from '@/types';
+import type { ToolData } from '@/lib/types/tool';
 
 interface CompareViewProps {
   tools: ToolData[];
